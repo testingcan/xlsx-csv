@@ -27,18 +27,11 @@ by providing a (set of) config-files. For use of config-files see below.
 The script comes with a default template configuration. The config files must reside in the 
 same folder as the script.
 
-```
-xlsx-csv.exe
-config/
-    default.toml
-```
-
 Each configuration file consists of three parameters. 
 * `debug`: bool (as a single parameter)
 * `source`: with the parameter `path`
 * `archive`: with the parameter `path`
 
-The configuration files are already catered to the individual environment, but can be changed, if necessary. 
 
 In order to deploy the script to an environment, an environment variable has to be set directly on the server,
 since the respective configuration file is being loaded conditionally. If not present already, create an
