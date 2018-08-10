@@ -14,6 +14,7 @@ use std::process;
 use std::path::Path;
 use std::{ffi::OsStr, fs, io};
 
+mod file;
 mod settings;
 use settings::Settings;
 
@@ -73,7 +74,7 @@ fn main() {
     };
 
     let vec = if Path::new(&s.source.path).is_dir() {
-        list_paths(&s.source.path).unwrap()
+        file::list_paths(&s.source.path).unwrap()
     } else {
         vec![(&s.source.path).to_owned()]
     };
@@ -94,7 +95,7 @@ fn main() {
         if s.debug {
             println!("Moving file '{:?}' to archive", file)
         };
-        match move_file(&file, &s.archive.path, &s.source.path) {
+        match file::move_file(&file, &s.archive.path, &s.source.path) {
             Ok(()) => {}
             Err(err) => {
                 println!("{}", err);
@@ -104,22 +105,6 @@ fn main() {
     }
 }
 
-fn move_file(file: &str, archive: &str, source: &str) -> Result<(), Box<Error>> {
-    fs::rename(file, str::replace(file, source, archive))?;
-    Ok(())
-}
-
-fn list_paths(root: &str) -> io::Result<Vec<String>> {
-    let mut result = vec![];
-
-    for path in fs::read_dir(root)? {
-        let path = path?.path();
-        if let Some("xlsx") = path.extension().and_then(OsStr::to_str) {
-            result.push(path.to_str().unwrap().to_owned());
-        }
-    }
-    Ok(result)
-}
 
 fn convert(file: &str) -> Result<(), Box<Error>> {
     let mut workbook: Xlsx<_> = open_workbook(&file).expect("Cannot open file!");
