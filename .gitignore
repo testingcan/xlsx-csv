@@ -1,0 +1,15 @@
+/target
+**/*.rs.bk
+.vscode
+
+# Ignore data and data-paths
+/archive
+/source
+*.csv
+*.xlsx
+
+# Ignore config files
+config/local.toml
+config/development.toml
+config/production.toml
+config/integration.toml
