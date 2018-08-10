@@ -39,6 +39,8 @@ pub fn convert(file: &str, sheet: &Option<Vec<String>>) -> Result<(), Box<Error>
                 wtr.write_record(&cols).unwrap();
             }
             wtr.flush().unwrap();
+        } else {
+            println!("Could not find sheet {:?} in file {}", &sheet, &file);
         }
     }
 
