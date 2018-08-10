@@ -18,7 +18,7 @@ use settings::Settings;
 
 fn main() {
     let matches = App::new("XLSX-CSV")
-        .version("0.2.1")
+        .version("0.2.2")
         .author("Raphael W. <raphael.wuillemier@protonmail.com")
         .about("Converts XLSX-files to CSV")
         .long_about(
@@ -41,6 +41,13 @@ fn main() {
             Arg::with_name("verbose")
                 .short("v")
                 .help("Show verbose debug output"),
+        )
+        .arg(
+            Arg::with_name("sheet")
+                .short("s")
+                .help("Specifiy the sheet(s) to convert")
+                .takes_value(true)
+                .multiple(true)
         )
         .get_matches();
 
@@ -65,11 +72,21 @@ fn main() {
         vec![(&settings.source.path).to_owned()]
     };
 
+    let sheets: Option<Vec<_>> = if matches.is_present("sheet") {
+        Some(matches.values_of("sheet")
+                .map(|sheet| sheet
+                    .map(|s| s.to_string())
+                    .collect())
+                .unwrap())
+    } else {
+        None
+    };
+
     for file in vec {
         if settings.debug {
             println!("Converting file: {:?}", file)
         };
-        match convert(&file) {
+        match convert(&file, &sheets) {
             Ok(()) => {}
             Err(err) => {
                 println!("{}", err);
