@@ -3,7 +3,6 @@ extern crate csv;
 use calamine::{open_workbook, DataType, Reader, Xlsx};
 use std::error::Error;
 
-
 pub fn convert(file: &str) -> Result<(), Box<Error>> {
     let mut workbook: Xlsx<_> = open_workbook(&file).expect("Cannot open file!");
 

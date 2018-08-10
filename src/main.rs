@@ -7,11 +7,11 @@ extern crate serde;
 extern crate serde_derive;
 
 use clap::{App, Arg};
-use std::process;
 use std::path::Path;
+use std::process;
 
-mod file;
 mod convert;
+mod file;
 use convert::convert;
 mod settings;
 use settings::Settings;
@@ -23,7 +23,8 @@ fn main() {
         .about("Converts XLSX-files to CSV")
         .long_about(
             "Use either with config-files or specify 
-            an input (and output) file to convert.")
+            an input (and output) file to convert.",
+        )
         .arg(
             Arg::with_name("input")
                 .short("i")
@@ -34,52 +35,38 @@ fn main() {
             Arg::with_name("output")
                 .short("o")
                 .help("Output directory [default: .]")
-                .takes_value(true)
+                .takes_value(true),
         )
         .arg(
             Arg::with_name("verbose")
                 .short("v")
                 .help("Show verbose debug output"),
         )
-        
         .get_matches();
 
-    let s = if !matches.is_present("input") {
-        Settings::new().expect(
-            "Could not read s. Either supply a config-file 
-                or specify an input file with '-i'",
-        )
+    let mut settings = Settings::new().unwrap();
+
+    if matches.is_present("input") {
+        settings.source.path = matches.value_of("input").unwrap().to_string()
+    }
+    if matches.is_present("output") {
+        settings.archive.path = matches.value_of("output").unwrap().to_string()
+    }
+    if matches.is_present("verbose") {
+        settings.debug = true
+    }
+    if settings.debug {
+        println!("{:?}", settings)
+    };
+
+    let vec = if Path::new(&settings.source.path).is_dir() {
+        file::list_paths(&settings.source.path).unwrap()
     } else {
-        let mut s = config::Config::new();
-        s.set(
-            "source.path",
-            matches.value_of("input").unwrap().to_string(),
-        ).unwrap();
-        s.set(
-            "archive.path",
-            matches.value_of("output").unwrap_or(matches.value_of("input").unwrap()).to_string(),
-        ).unwrap();
-        if matches.is_present("verbose") {
-            s.set("debug", true).unwrap();
-        } else {
-            s.set("debug", false).unwrap();
-        };
-        s.try_into().unwrap()
+        vec![(&settings.source.path).to_owned()]
     };
-
-    if s.debug {
-        println!("{:?}", s);
-    };
-
-    let vec = if Path::new(&s.source.path).is_dir() {
-        file::list_paths(&s.source.path).unwrap()
-    } else {
-        vec![(&s.source.path).to_owned()]
-    };
-
 
     for file in vec {
-        if s.debug {
+        if settings.debug {
             println!("Converting file: {:?}", file)
         };
         match convert(&file) {
@@ -90,10 +77,10 @@ fn main() {
             }
         }
 
-        if s.debug {
+        if settings.debug {
             println!("Moving file '{:?}' to archive", file)
         };
-        match file::move_file(&file, &s.archive.path, &s.source.path) {
+        match file::move_file(&file, &settings.archive.path, &settings.source.path) {
             Ok(()) => {}
             Err(err) => {
                 println!("{}", err);

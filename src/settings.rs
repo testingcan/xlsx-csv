@@ -22,7 +22,11 @@ impl Settings {
     pub fn new() -> Result<Self, ConfigError> {
         let mut s = Config::new();
 
-        s.merge(File::with_name("config/default"))?;
+        s.set_default("debug", false)?;
+        s.set_default("archive.path", "./")?;
+        s.set_default("source.path", "./")?;
+
+        s.merge(File::with_name("config/default").required(false))?;
 
         let env = env::var("RUN_MODE").unwrap_or("default".into());
         s.merge(File::with_name(&format!("config/{}", env)).required(false))?;

@@ -2,6 +2,7 @@ use std::error::Error;
 use std::{ffi::OsStr, fs, io};
 
 pub fn move_file(file: &str, archive: &str, source: &str) -> Result<(), Box<Error>> {
+    fs::create_dir_all(archive)?;
     fs::rename(file, str::replace(file, source, archive))?;
     Ok(())
 }
