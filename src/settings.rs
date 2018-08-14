@@ -16,6 +16,7 @@ pub struct Settings {
     pub debug: bool,
     pub archive: Archive,
     pub source: Source,
+    pub delimiter: String,
 }
 
 impl Settings {
@@ -25,6 +26,7 @@ impl Settings {
         s.set_default("debug", false)?;
         s.set_default("archive.path", "./")?;
         s.set_default("source.path", "./")?;
+        s.set_default("delimiter", ",")?;
 
         s.merge(File::with_name("config/default").required(false))?;
 

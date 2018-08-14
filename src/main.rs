@@ -49,6 +49,12 @@ fn main() {
                 .takes_value(true)
                 .multiple(true)
         )
+        .arg(
+            Arg::with_name("delimiter")
+                .short("d")
+                .help("Set the delimiter for the CSV-output")
+                .takes_value(true)
+        )
         .get_matches();
 
     let mut settings = Settings::new().unwrap();
@@ -58,6 +64,9 @@ fn main() {
     }
     if matches.is_present("output") {
         settings.archive.path = matches.value_of("output").unwrap().to_string()
+    }
+    if matches.is_present("delimiter") {
+        settings.delimiter = matches.value_of("delimiter").unwrap().to_string()
     }
     if matches.is_present("verbose") {
         settings.debug = true
@@ -86,7 +95,7 @@ fn main() {
         if settings.debug {
             println!("Converting file: {:?}", file)
         };
-        match convert(&file, &sheets) {
+        match convert(&file, &sheets, &settings) {
             Ok(()) => {}
             Err(err) => {
                 println!("{}", err);

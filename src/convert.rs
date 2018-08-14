@@ -2,8 +2,9 @@ extern crate calamine;
 extern crate csv;
 use calamine::{open_workbook, DataType, Reader, Xlsx};
 use std::error::Error;
+use settings;
 
-pub fn convert(file: &str, sheet: &Option<Vec<String>>) -> Result<(), Box<Error>> {
+pub fn convert(file: &str, sheet: &Option<Vec<String>>, settings: &settings::Settings) -> Result<(), Box<Error>> {
     let mut workbook: Xlsx<_> = open_workbook(&file).expect("Cannot open file!");
 
     let wb_sheets = vec![workbook.sheet_names()
@@ -21,6 +22,10 @@ pub fn convert(file: &str, sheet: &Option<Vec<String>>) -> Result<(), Box<Error>
     for sheet in sheets {
         if let Some(Ok(range)) = workbook.worksheet_range(&sheet) {
             let mut wtr = csv::WriterBuilder::new()
+                .delimiter(settings.delimiter.as_bytes()
+                    .first()
+                    .unwrap()
+                    .to_owned())
                 .from_path(format!("{}-{}.csv", str::replace(file, ".xlsx", "")
                     , str::replace(sheet, " ", "_")))
                 .unwrap();
