@@ -4,9 +4,9 @@ version = "0.2.2"
 authors = ["Raphael Wuillemier <wuillemr@essilor.de>"]
 
 [dependencies]
-calamine = "0.14.1"
-csv = "1"
+calamine = "0.14.3"
+csv = "1.0.0"
 config = "0.9"
 serde_derive = "^1.0.8"
 serde = "^1.0.8"
-clap = "~2.27.0"
+clap = "2.32.0"

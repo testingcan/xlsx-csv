@@ -19,7 +19,7 @@ use settings::Settings;
 fn main() {
     let matches = App::new("XLSX-CSV")
         .version("0.2.2")
-        .author("Raphael W. <raphael.wuillemier@protonmail.com")
+        .author("Raphael Wuillemier <raphael.wuillemier@protonmail.com>")
         .about("Converts XLSX-files to CSV")
         .long_about(
             "Use either with config-files or specify 
@@ -52,7 +52,7 @@ fn main() {
         .arg(
             Arg::with_name("delimiter")
                 .short("d")
-                .help("Set the delimiter for the CSV-output")
+                .help("Set the delimiter for the CSV-output [default: b',']")
                 .takes_value(true)
         )
         .get_matches();

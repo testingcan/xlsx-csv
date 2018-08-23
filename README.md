@@ -4,7 +4,7 @@ Basic XLSX to CSV converter.
 
 ## Usage
 ```
-XLSX-CSV 0.2.2
+XLSX-CSV 0.2.1
 Converts XLSX-files to CSV
 
 USAGE:
@@ -16,11 +16,9 @@ FLAGS:
     -v               Show verbose debug output
 
 OPTIONS:
-    -i <input>           Sets the input file
-    -o <output>          Output directory [default: .]
-    -s <sheet>...        Specifiy the sheet(s) to convert
+    -i <input>         Sets the input file
+    -o <output>        Output directory [default: .]
 ```
-
 The script can either be started by providing the input (and optionally output)-files or
 by providing a (set of) config-files. For use of config-files see below.
 
