@@ -29,8 +29,9 @@ by providing a (set of) config-files. For use of config-files see below.
 The script comes with a default template configuration. The config files must reside in the 
 same folder as the script.
 
-Each configuration file consists of three parameters. 
+Each configuration file consists of four parameters. 
 * `debug`: bool (as a single parameter)
+* `delimiter`: single parameter
 * `source`: with the parameter `path`
 * `archive`: with the parameter `path`
 
