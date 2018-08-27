@@ -72,3 +72,18 @@ pub fn convert(
 
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::fs::remove_file;
+    use std::fs::File;
+
+    #[test]
+    fn parse_dir() {
+        let mut f = File::create("foo.xlsx");
+        let vec = list_paths("./").unwrap();
+        assert_eq!(vec.len(), 1);
+        remove_file("foo.xlsx");
+    }
+}
