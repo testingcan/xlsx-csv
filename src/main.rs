@@ -23,12 +23,12 @@ fn main() {
         .about("Converts XLSX-files to CSV")
         .long_about(
             "Use either with config-files or specify 
-            an input (and output) file to convert.",
+            an input (and output) file or dir to convert.",
         )
         .arg(
             Arg::with_name("input")
                 .short("i")
-                .help("Sets the input file")
+                .help("Sets the input file or directory [default: .]")
                 .takes_value(true),
         )
         .arg(
