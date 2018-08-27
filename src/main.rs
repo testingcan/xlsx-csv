@@ -2,7 +2,6 @@ extern crate clap;
 extern crate config;
 extern crate serde;
 
-
 use clap::{App, Arg};
 use std::path::Path;
 use std::process;
@@ -42,13 +41,13 @@ fn main() {
                 .short("s")
                 .help("Specifiy the sheet(s) to convert")
                 .takes_value(true)
-                .multiple(true)
+                .multiple(true),
         )
         .arg(
             Arg::with_name("delimiter")
                 .short("d")
                 .help("Set the delimiter for the CSV-output [default: b',']")
-                .takes_value(true)
+                .takes_value(true),
         )
         .get_matches();
 
@@ -77,11 +76,12 @@ fn main() {
     };
 
     let sheets: Option<Vec<_>> = if matches.is_present("sheet") {
-        Some(matches.values_of("sheet")
-                .map(|sheet| sheet
-                    .map(|s| s.to_string())
-                    .collect())
-                .unwrap())
+        Some(
+            matches
+                .values_of("sheet")
+                .map(|sheet| sheet.map(|s| s.to_string()).collect())
+                .unwrap(),
+        )
     } else {
         None
     };
