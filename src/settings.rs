@@ -1,4 +1,5 @@
-use config::{Config, ConfigError, File};
+extern crate config;
+use self::config::{Config, ConfigError, File};
 use std::env;
 
 #[derive(Debug, Deserialize)]

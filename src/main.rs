@@ -1,20 +1,15 @@
-extern crate calamine;
 extern crate clap;
 extern crate config;
 extern crate serde;
 
-#[macro_use]
-extern crate serde_derive;
 
 use clap::{App, Arg};
 use std::path::Path;
 use std::process;
 
-mod convert;
-mod file;
-use convert::convert;
-mod settings;
-use settings::Settings;
+extern crate xlsx_csv;
+use xlsx_csv::file;
+use xlsx_csv::settings::Settings;
 
 fn main() {
     let matches = App::new("XLSX-CSV")
@@ -95,7 +90,7 @@ fn main() {
         if settings.debug {
             println!("Converting file: {:?}", file)
         };
-        match convert(&file, &sheets, &settings) {
+        match file::convert(&file, &sheets, &settings) {
             Ok(()) => {}
             Err(err) => {
                 println!("{}", err);
