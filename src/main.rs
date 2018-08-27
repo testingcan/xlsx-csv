@@ -52,7 +52,7 @@ fn main() {
         )
         .get_matches();
 
-    let mut settings = Settings::new().unwrap();
+    let mut settings = Settings::new(true).unwrap();
 
     if matches.is_present("input") {
         settings.source.path = matches.value_of("input").unwrap().to_string()

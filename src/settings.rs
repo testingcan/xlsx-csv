@@ -21,7 +21,7 @@ pub struct Settings {
 }
 
 impl Settings {
-    pub fn new() -> Result<Self, ConfigError> {
+    pub fn new(config: bool) -> Result<Self, ConfigError> {
         let mut s = Config::new();
 
         s.set_default("debug", false)?;
@@ -29,13 +29,30 @@ impl Settings {
         s.set_default("source.path", "./")?;
         s.set_default("delimiter", ",")?;
 
-        s.merge(File::with_name("config/default").required(false))?;
+        if config {
+            s.merge(File::with_name("config/default").required(false))?;
 
-        let env = env::var("RUN_MODE").unwrap_or("default".into());
-        s.merge(File::with_name(&format!("config/{}", env)).required(false))?;
+            let env = env::var("RUN_MODE").unwrap_or("default".into());
+            s.merge(File::with_name(&format!("config/{}", env)).required(false))?;
 
-        s.merge(File::with_name("config/local").required(false))?;
+            s.merge(File::with_name("config/local").required(false))?;
+        }
 
         s.try_into()
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn default_settings() {
+        let settings = Settings::new(false).unwrap();
+        assert_eq!(settings.debug, false);
+        assert_eq!(settings.archive.path, "./");
+        assert_eq!(settings.source.path, "./");
+        assert_eq!(settings.delimiter, ",");
     }
 }
