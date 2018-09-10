@@ -28,8 +28,7 @@ script reads the current directory for XLSX-files to convert.
 
 
 ## Configuration
-The script comes with a default template configuration. The config files must reside in  
-`/config`. 
+The script comes with a default template configuration. The config files must reside in `/config`. 
 
 Each configuration file consists of five parameters. 
 * `debug`: bool
