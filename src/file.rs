@@ -44,6 +44,11 @@ pub fn convert(
         if let Some(Ok(range)) = workbook.worksheet_range(&sheet) {
             let mut wtr = csv::WriterBuilder::new()
                 .delimiter(settings.delimiter.as_bytes().first().unwrap().to_owned())
+                .terminator(if settings.crlf {
+                    csv::Terminator::CRLF
+                } else {
+                    csv::Terminator::Any(b'\n')
+                })
                 .from_path(format!(
                     "{}-{}.csv",
                     str::replace(file, ".xlsx", ""),
@@ -53,7 +58,8 @@ pub fn convert(
             let rows = range.rows();
 
             for (_i, row) in rows.enumerate() {
-                let cols: Vec<String> = row.iter()
+                let cols: Vec<String> = row
+                    .iter()
                     .map(|c| match c {
                         DataType::Int(c) => format!("{}", c),
                         DataType::Float(c) => format!("{}", c),
