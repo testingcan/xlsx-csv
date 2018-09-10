@@ -21,7 +21,6 @@ OPTIONS:
     -i <input>            Sets the input file or directory [default: .]
     -o <output>           Output directory [default: .]
     -s <sheet>...         Specifiy the sheet(s) to convert
-
 ```
 The script can either be started by providing the input (and optionally output)-files or
 by providing a (set of) config-files. For use of config-files see below. By default the
@@ -33,8 +32,9 @@ The script comes with a default template configuration. The config files must re
 same folder as the script.
 
 Each configuration file consists of four parameters. 
-* `debug`: bool (as a single parameter)
-* `delimiter`: single parameter
+* `debug`: bool
+* `delimiter`
+* `crlf`: bool
 * `source`: with the parameter `path`
 * `archive`: with the parameter `path`
 
