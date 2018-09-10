@@ -28,10 +28,10 @@ script reads the current directory for XLSX-files to convert.
 
 
 ## Configuration
-The script comes with a default template configuration. The config files must reside in the 
-same folder as the script.
+The script comes with a default template configuration. The config files must reside in  
+`/config`. 
 
-Each configuration file consists of four parameters. 
+Each configuration file consists of five parameters. 
 * `debug`: bool
 * `delimiter`
 * `crlf`: bool
