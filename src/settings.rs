@@ -18,6 +18,7 @@ pub struct Settings {
     pub archive: Archive,
     pub source: Source,
     pub delimiter: String,
+    pub crlf: bool
 }
 
 impl Settings {
@@ -28,6 +29,7 @@ impl Settings {
         s.set_default("archive.path", "./")?;
         s.set_default("source.path", "./")?;
         s.set_default("delimiter", ",")?;
+        s.set_default("crlf", false)?;
 
         if config {
             s.merge(File::with_name("config/default").required(false))?;

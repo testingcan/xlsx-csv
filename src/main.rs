@@ -34,6 +34,7 @@ fn main() {
         .arg(
             Arg::with_name("verbose")
                 .short("v")
+                .long("verbose")
                 .help("Show verbose debug output"),
         )
         .arg(
@@ -48,6 +49,12 @@ fn main() {
                 .short("d")
                 .help("Set the delimiter for the CSV-output [default: b',']")
                 .takes_value(true),
+        )
+        .arg(
+            Arg::with_name("crlf")
+                .short("c")
+                .long("crlf")
+                .help("Set CRLF-terminator"),
         )
         .get_matches();
 
@@ -64,6 +71,9 @@ fn main() {
     }
     if matches.is_present("verbose") {
         settings.debug = true
+    }
+    if matches.is_present("crlf") {
+        settings.crlf = true
     }
     if settings.debug {
         println!("{:?}", settings)
