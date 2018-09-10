@@ -4,22 +4,24 @@ Basic XLSX to CSV converter.
 
 ## Usage
 ```
-XLSX-CSV 0.2.2
+XLSX-CSV 0.2.3
 Converts XLSX-files to CSV
 
 USAGE:
-    xlsx-csv [FLAGS] [OPTIONS]
+    xlsx-csv.exe [FLAGS] [OPTIONS]
 
 FLAGS:
+    -c, --crlf       Set CRLF-terminator
     -h, --help       Prints help information
     -V, --version    Prints version information
-    -v               Show verbose debug output
+    -v, --verbose    Show verbose debug output
 
 OPTIONS:
     -d <delimiter>        Set the delimiter for the CSV-output [default: b',']
     -i <input>            Sets the input file or directory [default: .]
     -o <output>           Output directory [default: .]
     -s <sheet>...         Specifiy the sheet(s) to convert
+
 ```
 The script can either be started by providing the input (and optionally output)-files or
 by providing a (set of) config-files. For use of config-files see below. By default the

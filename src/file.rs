@@ -28,7 +28,7 @@ pub fn convert(
     file: &str,
     sheet: &Option<Vec<String>>,
     settings: &settings::Settings,
-    ) -> Result<(), Box<Error>> {
+) -> Result<(), Box<Error>> {
     let mut workbook: Xlsx<_> = open_workbook(&file).expect("Cannot open file!");
 
     let wb_sheets = vec![workbook.sheet_names().first().expect("c").to_owned()];
@@ -44,7 +44,11 @@ pub fn convert(
         if let Some(Ok(range)) = workbook.worksheet_range(&sheet) {
             let mut wtr = csv::WriterBuilder::new()
                 .delimiter(settings.delimiter.as_bytes().first().unwrap().to_owned())
-                .terminator(if settings.crlf { csv::Terminator::CRLF } else { csv::Terminator::Any(b'\n') })
+                .terminator(if settings.crlf {
+                    csv::Terminator::CRLF
+                } else {
+                    csv::Terminator::Any(b'\n')
+                })
                 .from_path(format!(
                     "{}-{}.csv",
                     str::replace(file, ".xlsx", ""),
@@ -54,7 +58,8 @@ pub fn convert(
             let rows = range.rows();
 
             for (_i, row) in rows.enumerate() {
-                let cols: Vec<String> = row.iter()
+                let cols: Vec<String> = row
+                    .iter()
                     .map(|c| match c {
                         DataType::Int(c) => format!("{}", c),
                         DataType::Float(c) => format!("{}", c),

@@ -12,7 +12,7 @@ use xlsx_csv::settings::Settings;
 
 fn main() {
     let matches = App::new("XLSX-CSV")
-        .version("0.2.2")
+        .version("0.2.3")
         .author("Raphael Wuillemier <raphael.wuillemier@protonmail.com>")
         .about("Converts XLSX-files to CSV")
         .long_about(
