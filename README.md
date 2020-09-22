@@ -1,3 +1,5 @@
+#### For a more robust and - more importantly - not abandoned converter, check out [XLSX2CSV](https://github.com/zitsen/xlsx2csv.rs).
+
 # XLSX-CSV
 
 Basic XLSX to CSV converter.
